@@ -1,4 +1,5 @@
 /* Javascript for webCreatorXBlock. */
+var App = angular.module('ui.webcreator', ['ui.bootstrap']);
 function webCreatorXBlock(runtime, element) {
 
     function updateCount(result) {
@@ -18,14 +19,18 @@ function webCreatorXBlock(runtime, element) {
 
     $(function ($) {
         /* Here's where you'd do things on page load. */
-            var editor = ace.edit("jseditor");
-            editor.setTheme("ace/theme/textmate");
-            editor.getSession().setMode("ace/mode/javascript");
-            editor = ace.edit("csseditor");
-            editor.setTheme("ace/theme/textmate");
-            editor.getSession().setMode("ace/mode/css");
-            editor = ace.edit("htmleditor");
-            editor.setTheme("ace/theme/textmate");
-            editor.getSession().setMode("ace/mode/html");
+
     });
 }
+
+
+var editor = ace.edit("jseditor");
+editor.setTheme("ace/theme/textmate");
+editor.getSession().setMode("ace/mode/javascript");
+editor = ace.edit("csseditor");
+editor.setTheme("ace/theme/textmate");
+editor.getSession().setMode("ace/mode/css");
+editor = ace.edit("htmleditor");
+editor.setTheme("ace/theme/textmate");
+editor.getSession().setMode("ace/mode/html");
+
