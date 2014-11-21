@@ -1,0 +1,16 @@
+/* CSS for webCreatorXBlock */
+
+.webcreator_block .count {
+    font-weight: bold;
+}
+
+.webcreator_block p {
+    cursor: pointer;
+}
+
+#editor {
+    height: 275px;
+    width: 650px;
+
+
+    }
