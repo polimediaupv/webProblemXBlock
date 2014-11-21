@@ -8,7 +8,7 @@
     cursor: pointer;
 }
 
-#editor {
+.editor {
     height: 275px;
     width: 650px;
 
