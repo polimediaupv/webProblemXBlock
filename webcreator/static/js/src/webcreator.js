@@ -1,5 +1,4 @@
 /* Javascript for webCreatorXBlock. */
-var App = angular.module('ui.webcreator', ['ui.bootstrap']);
 function webCreatorXBlock(runtime, element) {
 
     function updateCount(result) {
@@ -20,9 +19,14 @@ function webCreatorXBlock(runtime, element) {
     $(function ($) {
         /* Here's where you'd do things on page load. */
 
+
+    });
+
+    $(window).load(function (){
+
+
     });
 }
-
 
 var editor = ace.edit("jseditor");
 editor.setTheme("ace/theme/textmate");
@@ -34,3 +38,15 @@ editor = ace.edit("htmleditor");
 editor.setTheme("ace/theme/textmate");
 editor.getSession().setMode("ace/mode/html");
 
+function showStuff(id,element) {
+
+        console.log("patata");
+        tabnames = $(".editor",element.parentNode.parentNode).map(function(){return $(this).context.id;}).get();
+
+        tabnames.forEach(function(tab) {
+             $("#"+tab,element.parentNode.parentNode).addClass("oculta");
+        });
+
+        $("#"+id,element.parentNode.parentNode).removeClass("oculta");
+       return false;
+   }

@@ -4,18 +4,18 @@
 <div class="visor">
 afadsf
 </div>
-<div ng-app="ui.webcreator">
-  <tabset>
-    <tab heading="HTML">
-        <div id="htmleditor" class="editor"></div>
-    </tab>
-    <tab heading="CSS">
-        <div id="csseditor" class="editor"></div>
-    </tab>
-    <tab heading="Javascript">
-        <div id="jseditor" class="editor"></div>
-    </tab>
-  </tabset>
+
+<div>
+  <div class="tabbheaders">
+      <a onclick="showStuff('htmleditor',this);" class="tabheader" >HTML</a>
+      <a onclick="showStuff('csseditor',this);" class="tabheader" >CSS</a>
+      <a onclick="showStuff('jseditor',this);" class="tabheader" >Javascript</a>
+  </div>
+  <div class="tabcontents">
+      <div id="htmleditor" class="editor"></div>
+      <div id="csseditor" class="editor oculta"></div>
+      <div id="jseditor" class="editor oculta"></div>
+  </div>
 </div>
 
 
