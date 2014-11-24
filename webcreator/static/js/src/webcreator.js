@@ -1,42 +1,37 @@
 /* Javascript for webCreatorXBlock. */
 function webCreatorXBlock(runtime, element) {
 
-    function updateCount(result) {
-        $('.count', element).text(result.count);
-    }
+    console.log("patatas");
+    var editor = ace.edit("jseditor",element);
+    editor.setTheme("ace/theme/textmate");
+    editor.getSession().setMode("ace/mode/javascript");
+    editor.getSession().setValue(atob($($("#jseditor",element)[0]).attr("value")));
+    editor.resize();
 
-    var handlerUrl = runtime.handlerUrl(element, 'increment_count');
 
-    $('p', element).click(function(eventObject) {
-        $.ajax({
-            type: "POST",
-            url: handlerUrl,
-            data: JSON.stringify({"hello": "world"}),
-            success: updateCount
-        });
-    });
+    editor = ace.edit("csseditor",element);
+    editor.setTheme("ace/theme/textmate");
+    editor.getSession().setMode("ace/mode/css");
+    editor.getSession().setValue(atob($($("#csseditor",element)[0]).attr("value")));
+    editor.resize();
+
+    editor = ace.edit("htmleditor",element);
+    editor.setTheme("ace/theme/textmate");
+    editor.getSession().setMode("ace/mode/html");
+    editor.getSession().setValue(atob($($("#htmleditor",element)[0]).attr("value")));
+    editor.resize();
 
     $(function ($) {
         /* Here's where you'd do things on page load. */
-
-
+        console.log("patata");
     });
 
     $(window).load(function (){
-
-
+        console.log("patata");
     });
 }
 
-var editor = ace.edit("jseditor");
-editor.setTheme("ace/theme/textmate");
-editor.getSession().setMode("ace/mode/javascript");
-editor = ace.edit("csseditor");
-editor.setTheme("ace/theme/textmate");
-editor.getSession().setMode("ace/mode/css");
-editor = ace.edit("htmleditor");
-editor.setTheme("ace/theme/textmate");
-editor.getSession().setMode("ace/mode/html");
+
 
 function showStuff(id,element) {
 

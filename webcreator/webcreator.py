@@ -1,9 +1,10 @@
 """TO-DO: Write a description of what this XBlock is."""
 
 import pkg_resources
+import base64
 
 from xblock.core import XBlock
-from xblock.fields import Scope, Integer, String
+from xblock.fields import Scope, Integer, String,
 from xblock.fragment import Fragment
 
 
@@ -22,30 +23,31 @@ class webCreatorXBlock(XBlock):
                           help="Name of the component in the edxplatform")
 
     cssCodeTeacher = String(display_name="cssCode",
-                  default="codigocss",
+                  default=".alerta {\n\tbackground-color: #f9301c;\n\tdisplay:inline-block;\n\tcolor: #ffffff;\n\tfont-family:Arial;\n\tfont-size:12px;\n\tfont-weight:bold;\n\tfont-style:normal;\n\ttext-align:center;\n}",
                   scope=Scope.content,
                   help="cssCode")
     htmlCodeTeacher = String(display_name="htmlCode",
-                  default="codigohtml",
+                  default="<!DOCTYPE html>\n<html>\n\t<body>\n\t<h1 class='alerta'>hola mundo</h1>\n\t<button onclick='alerta();'>alerta</button>\n\t</body>\n</html>",
                   scope=Scope.content,
                   help="cssCode")
     jsCodeTeacher = String(display_name="jsCode",
-                  default="codigojs",
+                  default="function alerta(){\n\talert('alerta enviada desde el javascript');\n}",
                   scope=Scope.content,
                   help="cssCode")
 
     cssCode = String(display_name="cssCode",
-                  default="codigocss",
+                  default="",
                   scope=Scope.user_state,
                   help="cssCode")
     htmlCode = String(display_name="htmlCode",
-                  default="codigohtml",
+                  default="",
                   scope=Scope.user_state,
                   help="cssCode")
     jsCode = String(display_name="jsCode",
-                  default="codigojs",
+                  default="",
                   scope=Scope.user_state,
                   help="cssCode")
+    #evaluate = boolean
 
     def resource_string(self, path):
         """Handy helper for getting resources from our kit."""
@@ -58,12 +60,13 @@ class webCreatorXBlock(XBlock):
         The primary view of the webCreatorXBlock, shown to students
         when viewing courses.
         """
+        cssCode = self.cssCode if self.cssCode !="" else self.cssCodeTeacher
+        htmlCode = self.htmlCode if self.htmlCode !="" else self.htmlCodeTeacher
+        jsCode = self.jsCode if self.jsCode !="" else self.jsCodeTeacher
+
         html = self.resource_string("static/html/webcreator.html")
-        frag = Fragment(html.format(self=self))
+        frag = Fragment(html.format(self=self,cssCode=base64.encodestring(cssCode),htmlCode=base64.encodestring(htmlCode),jsCode=base64.encodestring(jsCode)))
         frag.add_css(self.resource_string("static/css/webcreator.css"))
-        frag.add_css_url("//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css")
-        frag.add_javascript_url("//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.js")
-        frag.add_javascript_url("//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.12.0.js")
         frag.add_javascript_url("//cdnjs.cloudflare.com/ajax/libs/ace/1.1.3/ace.js")
         frag.add_javascript(self.resource_string("static/js/src/webcreator.js"))
         frag.initialize_js('webCreatorXBlock')
