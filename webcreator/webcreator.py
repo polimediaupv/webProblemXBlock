@@ -4,7 +4,7 @@ import pkg_resources
 import base64
 
 from xblock.core import XBlock
-from xblock.fields import Scope, Integer, String,
+from xblock.fields import Scope, Integer, String
 from xblock.fragment import Fragment
 
 
@@ -72,18 +72,32 @@ class webCreatorXBlock(XBlock):
         frag.initialize_js('webCreatorXBlock')
         return frag
 
-    # TO-DO: change this handler to perform your own actions.  You may need more
-    # than one handler, or you may not need any handlers at all.
+    def studio_view(self, context=None):   #studio_view
+        cssCode = self.cssCodeTeacher
+        htmlCode = self.htmlCodeTeacher
+        jsCode = self.jsCodeTeacher
+
+        html = self.resource_string("static/html/webcreator_edit.html")
+        frag = Fragment(html.format(self=self,cssCode=base64.encodestring(cssCode),htmlCode=base64.encodestring(htmlCode),jsCode=base64.encodestring(jsCode)))
+        frag.add_css(self.resource_string("static/css/webcreator.css"))
+        frag.add_javascript_url("//cdnjs.cloudflare.com/ajax/libs/ace/1.1.3/ace.js")
+        frag.add_javascript(self.resource_string("static/js/src/webcreator_edit.js"))
+        frag.initialize_js('webCreatorXBlock')
+        return frag
+
     @XBlock.json_handler
-    def increment_count(self, data, suffix=''):
+    def save_content(self, data, suffix=''):
         """
         An example handler, which increments the data.
         """
-        # Just to show data coming in...
-        assert data['hello'] == 'world'
+        self.display_name = data['display_name']
+        self.jsCodeTeacher = data['jsCode']
+        self.cssCodeTeacher = data['cssCode']
+        self.htmlCodeTeacher = data['htmlCode']
 
-        self.count += 1
-        return {"count": self.count}
+        return {
+            'result' : 'success',
+        }
 
     # TO-DO: change this to create the scenarios you'd like to see in the
     # workbench while developing your XBlock.

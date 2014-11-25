@@ -1,24 +1,30 @@
 /* Javascript for webCreatorXBlock. */
 function webCreatorXBlock(runtime, element) {
 
-    console.log("patatas");
-    var editor = ace.edit("jseditor",element);
+   console.log("patatas");
+    var editor = ace.edit($("#jseditor",element)[0]);
+    var content = atob($($("#jseditor",element)[0]).attr("value").replace(/\s/g, ''))
     editor.setTheme("ace/theme/textmate");
     editor.getSession().setMode("ace/mode/javascript");
-    editor.getSession().setValue(atob($($("#jseditor",element)[0]).attr("value")));
+    editor.getSession().setValue(content);
     editor.resize();
+    $("#jseditor",element).addClass("oculta");
 
 
-    editor = ace.edit("csseditor",element);
+    editor = ace.edit($("#csseditor",element)[0]);
     editor.setTheme("ace/theme/textmate");
     editor.getSession().setMode("ace/mode/css");
-    editor.getSession().setValue(atob($($("#csseditor",element)[0]).attr("value")));
+    content = atob($($("#csseditor",element)[0]).attr("value").replace(/\s/g, ''))
+    editor.getSession().setValue(content);
     editor.resize();
+    //we add the hidden class after the resize of the editor
+    $("#csseditor",element).addClass("oculta");
 
-    editor = ace.edit("htmleditor",element);
+    editor = ace.edit($("#htmleditor",element)[0]);
     editor.setTheme("ace/theme/textmate");
     editor.getSession().setMode("ace/mode/html");
-    editor.getSession().setValue(atob($($("#htmleditor",element)[0]).attr("value")));
+    content = atob($($("#htmleditor",element)[0]).attr("value").replace(/\s/g, ''))
+    editor.getSession().setValue(content);
     editor.resize();
 
     $(function ($) {

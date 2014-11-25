@@ -2,10 +2,9 @@
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.js"></script>
 <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.12.0.js"></script>-->
 <div class="visor">
-afadsf
+<iframe></iframe>
 </div>
-
-<div>
+<div class="problem" role="application">
   <div class="tabbheaders">
       <a onclick="showStuff('htmleditor',this);" class="tabheader" >HTML</a>
       <a onclick="showStuff('csseditor',this);" class="tabheader" >CSS</a>
@@ -13,9 +12,12 @@ afadsf
   </div>
   <div class="tabcontents">
       <div id="htmleditor" class="editor" value="{htmlCode}"></div>
-      <div id="csseditor" class="editor oculta" value="{cssCode}"></div>
-      <div id="jseditor" class="editor oculta" value="{jsCode}"></div>
+      <div id="csseditor" class="editor" value="{cssCode}"></div>
+      <div id="jseditor" class="editor" value="{jsCode}"></div>
+  </div>
+  <div class="action">
+        <input class="actions display" type="button" data-checking="Checking..." value="Visualizar">
+        <input class="actions save" type="button" data-checking="Checking..." value="Guardar">
+        <input class="actions eval" type="button" data-checking="Checking..." value="Evaluar">
   </div>
 </div>
-
-

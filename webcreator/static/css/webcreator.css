@@ -8,12 +8,21 @@
     cursor: pointer;
 }
 
+.visor>iframe{
+    width: 600px;
+    border: 1px;
+}
+
 .editor {
     height: 275px;
     width: 600px;
-
-
     }
+
+.actions {
+    height: 40px;
+    vertical-align: middle;
+    font-weight: 600;
+}
 
 .oculta {
     visibility: hidden; height: 0px;
