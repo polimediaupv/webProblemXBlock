@@ -23,15 +23,15 @@ class webCreatorXBlock(XBlock):
                           help="Name of the component in the edxplatform")
 
     cssCodeTeacher = String(display_name="cssCode",
-                  default=".alerta {\n\tbackground-color: #f9301c;\n\tdisplay:inline-block;\n\tcolor: #ffffff;\n\tfont-family:Arial;\n\tfont-size:12px;\n\tfont-weight:bold;\n\tfont-style:normal;\n\ttext-align:center;\n}",
+                  default="LmFsZXJ0YSB7CgliYWNrZ3JvdW5kLWNvbG9yOiAjZjkzMDFjOwoJZGlzcGxheTppbmxpbmUtYmxvY2s7Cgljb2xvcjogI2ZmZmZmZjsKCWZvbnQtZmFtaWx5OkFyaWFsOwoJZm9udC1zaXplOjEycHg7Cglmb250LXdlaWdodDpib2xkOwoJZm9udC1zdHlsZTpub3JtYWw7Cgl0ZXh0LWFsaWduOmNlbnRlcjsKfQ==",
                   scope=Scope.content,
                   help="cssCode")
     htmlCodeTeacher = String(display_name="htmlCode",
-                  default="<!DOCTYPE html>\n<html>\n\t<body>\n\t<h1 class='alerta'>hola mundo</h1>\n\t<button onclick='alerta();'>alerta</button>\n\t</body>\n</html>",
+                  default="PCFET0NUWVBFIGh0bWw+CjxodG1sPgogICAgPGJvZHk+CiAgICA8aDEgY2xhc3M9J2FsZXJ0YSc+aG9sYSBtdW5kbzwvaDE+CiAgICA8YnV0dG9uIG9uY2xpY2s9J2FsZXJ0YSgpOyc+YWxlcnRhPC9idXR0b24+CiAgICA8L2JvZHk+CjwvaHRtbD4K", #"PCFET0NUWVBFIGh0bWw+CjxodG1sPgoJPGJvZHk+Cgk8aDEgY2xhc3M9J2FsZXJ0YSc+aG9sYSBtdW5kbzwvaDE+Cgk8YnV0dG9uIG9uY2xpY2s9J2FsZXJ0YSgpOyc+YWxlcnRhPC9idXR0b24+Cgk8L2JvZHk+CjwvaHRtbD4=",
                   scope=Scope.content,
                   help="cssCode")
     jsCodeTeacher = String(display_name="jsCode",
-                  default="function alerta(){\n\talert('alerta enviada desde el javascript');\n}",
+                  default="ZnVuY3Rpb24gYWxlcnRhKCl7CglhbGVydCgnYWxlcnRhIGVudmlhZGEgZGVzZGUgZWwgamF2YXNjcmlwdCcpOwp9",
                   scope=Scope.content,
                   help="cssCode")
 
@@ -65,7 +65,7 @@ class webCreatorXBlock(XBlock):
         jsCode = self.jsCode if self.jsCode !="" else self.jsCodeTeacher
 
         html = self.resource_string("static/html/webcreator.html")
-        frag = Fragment(html.format(self=self,cssCode=base64.encodestring(cssCode),htmlCode=base64.encodestring(htmlCode),jsCode=base64.encodestring(jsCode)))
+        frag = Fragment(html.format(self=self,cssCode=cssCode,htmlCode=htmlCode,jsCode=jsCode))
         frag.add_css(self.resource_string("static/css/webcreator.css"))
         frag.add_javascript_url("//cdnjs.cloudflare.com/ajax/libs/ace/1.1.3/ace.js")
         frag.add_javascript(self.resource_string("static/js/src/webcreator.js"))
@@ -78,7 +78,7 @@ class webCreatorXBlock(XBlock):
         jsCode = self.jsCodeTeacher
 
         html = self.resource_string("static/html/webcreator_edit.html")
-        frag = Fragment(html.format(self=self,cssCode=base64.encodestring(cssCode),htmlCode=base64.encodestring(htmlCode),jsCode=base64.encodestring(jsCode)))
+        frag = Fragment(html.format(self=self,cssCode=cssCode,htmlCode=htmlCode,jsCode=jsCode))
         frag.add_css(self.resource_string("static/css/webcreator.css"))
         frag.add_javascript_url("//cdnjs.cloudflare.com/ajax/libs/ace/1.1.3/ace.js")
         frag.add_javascript(self.resource_string("static/js/src/webcreator_edit.js"))
@@ -94,6 +94,32 @@ class webCreatorXBlock(XBlock):
         self.jsCodeTeacher = data['jsCode']
         self.cssCodeTeacher = data['cssCode']
         self.htmlCodeTeacher = data['htmlCode']
+
+        return {
+            'result' : 'success',
+        }
+
+    @XBlock.json_handler
+    def save_answer(self, data, suffix=''):
+        """
+        An example handler, which increments the data.
+        """
+        self.jsCode = data['jsCode']
+        self.cssCode = data['cssCode']
+        self.htmlCode = data['htmlCode']
+
+        return {
+            'result' : 'success',
+        }
+
+    @XBlock.json_handler
+    def reset_answer(self, data, suffix=''):
+        """
+        An example handler, which increments the data.
+        """
+        self.jsCode = ""
+        self.cssCode = ""
+        self.htmlCode = ""
 
         return {
             'result' : 'success',

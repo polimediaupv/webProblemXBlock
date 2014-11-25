@@ -27,6 +27,58 @@ function webCreatorXBlock(runtime, element) {
     editor.getSession().setValue(content);
     editor.resize();
 
+    $(element).find('.actions.save').bind('click', function() {
+       var editor = ace.edit($("#htmleditor",element)[0]);
+       var htmlCode = btoa(editor.getSession().getValue());
+       editor = ace.edit($("#jseditor",element)[0]);
+       var jsCode = btoa(editor.getSession().getValue());
+       editor = ace.edit($("#csseditor",element)[0]);
+       var cssCode = btoa(editor.getSession().getValue());
+
+       var data = {
+            'jsCode': jsCode,
+            'htmlCode': htmlCode,
+            'cssCode': cssCode,
+        };
+
+        $('.xblock-editor-error-message', element).html();
+        $('.xblock-editor-error-message', element).css('display', 'none');
+        var handlerUrl = runtime.handlerUrl(element, 'save_answer');
+        $.post(handlerUrl, JSON.stringify(data)).done(function(response) {
+            if (response.result === 'success') {
+                window.location.reload(false);
+            } else {
+                $('.xblock-editor-error-message', element).html('Error: '+response.message);
+                $('.xblock-editor-error-message', element).css('display', 'block');
+            }
+        });
+   });
+
+    $(element).find('.actions.reset').bind('click', function() {
+       var editor = ace.edit($("#htmleditor",element)[0]);
+       var htmlCode = btoa(editor.getSession().getValue());
+       editor = ace.edit($("#jseditor",element)[0]);
+       var jsCode = btoa(editor.getSession().getValue());
+       editor = ace.edit($("#csseditor",element)[0]);
+       var cssCode = btoa(editor.getSession().getValue());
+
+       var data = {
+        };
+
+        $('.xblock-editor-error-message', element).html();
+        $('.xblock-editor-error-message', element).css('display', 'none');
+        var handlerUrl = runtime.handlerUrl(element, 'reset_answer');
+        $.post(handlerUrl, JSON.stringify(data)).done(function(response) {
+            if (response.result === 'success') {
+                window.location.reload(false);
+            } else {
+                $('.xblock-editor-error-message', element).html('Error: '+response.message);
+                $('.xblock-editor-error-message', element).css('display', 'block');
+            }
+        });
+   });
+
+
     $(function ($) {
         /* Here's where you'd do things on page load. */
         console.log("patata");

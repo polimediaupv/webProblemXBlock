@@ -32,11 +32,18 @@ function webCreatorXBlock(runtime, element) {
     });
 
    $(element).find('.save-button').bind('click', function() {
-        var data = {
+       var editor = ace.edit($("#htmleditor",element)[0]);
+       var htmlCode = btoa(editor.getSession().getValue());
+       editor = ace.edit($("#jseditor",element)[0]);
+       var jsCode = btoa(editor.getSession().getValue());
+       editor = ace.edit($("#csseditor",element)[0]);
+       var cssCode = btoa(editor.getSession().getValue());
+
+       var data = {
             'display_name': $(edit_display_name).context.value,
-            'jsCode': $("#jseditor>.ace_scroller", element)[0].innerText,
-            'htmlCode': $("#htmleditor>.ace_scroller", element)[0].innerText,
-            'cssCode': $("#csseditor>.ace_scroller", element)[0].innerText,
+            'jsCode': jsCode,
+            'htmlCode': htmlCode,
+            'cssCode': cssCode,
         };
 
         $('.xblock-editor-error-message', element).html();
