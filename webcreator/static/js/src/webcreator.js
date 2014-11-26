@@ -78,6 +78,36 @@ function webCreatorXBlock(runtime, element) {
         });
    });
 
+    $(element).find('.actions.display').bind('click', function () {
+
+        var iframe = $("iframe")[0];
+        var doc = iframe.contentDocument;
+        var editor = ace.edit($("#htmleditor", element)[0]);
+        //doc.open();
+        text = editor.getSession().getValue();
+        //doc.writeln(editor.getSession().getValue());
+
+        editor = ace.edit($("#csseditor", element)[0]);
+        var cssCode= editor.getSession().getValue();
+        var cssLink = "<style type='text/css'>" + cssCode + "</style>";
+        //var head = $("iframe").contents().find("head")[0];
+        //head.append(cssLink);
+        text += cssLink;
+
+        editor = ace.edit($("#jseditor", element)[0]);
+        var jsCode =  editor.getSession().getValue();
+
+        var jsLink = "<script type='text/javascript'>" + jsCode + "</" +"script>";
+
+        text += jsLink;
+
+
+        doc.writeln(text);
+        doc.close();
+
+
+    });
+
 
     $(function ($) {
         /* Here's where you'd do things on page load. */
