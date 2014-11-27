@@ -47,7 +47,10 @@ class webCreatorXBlock(XBlock):
                   default="",
                   scope=Scope.user_state,
                   help="cssCode")
-    #evaluate = boolean
+    evaluated = Integer(display_name="evaluated",
+                        default=0,
+                        scope=Scope.user_state,
+                        help="evaluated")
 
     def resource_string(self, path):
         """Handy helper for getting resources from our kit."""
@@ -63,9 +66,10 @@ class webCreatorXBlock(XBlock):
         cssCode = self.cssCode if self.cssCode !="" else self.cssCodeTeacher
         htmlCode = self.htmlCode if self.htmlCode !="" else self.htmlCodeTeacher
         jsCode = self.jsCode if self.jsCode !="" else self.jsCodeTeacher
+        evaluated = self.evaluated
 
         html = self.resource_string("static/html/webcreator.html")
-        frag = Fragment(html.format(self=self,cssCode=cssCode,htmlCode=htmlCode,jsCode=jsCode))
+        frag = Fragment(html.format(self=self,cssCode=cssCode,htmlCode=htmlCode,jsCode=jsCode, evaluated=evaluated))
         frag.add_css(self.resource_string("static/css/webcreator.css"))
         frag.add_javascript_url("//cdnjs.cloudflare.com/ajax/libs/ace/1.1.3/ace.js")
         frag.add_javascript(self.resource_string("static/js/src/webcreator.js"))
@@ -120,6 +124,17 @@ class webCreatorXBlock(XBlock):
         self.jsCode = ""
         self.cssCode = ""
         self.htmlCode = ""
+
+        return {
+            'result' : 'success',
+        }
+
+    @XBlock.json_handler
+    def evaluate(self, data, suffix=''):
+        """
+        An example handler, which increments the data.
+        """
+        self.evaluated = data['evaluated']
 
         return {
             'result' : 'success',
