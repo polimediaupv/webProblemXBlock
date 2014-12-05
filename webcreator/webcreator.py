@@ -3,11 +3,13 @@
 import pkg_resources
 import base64
 import json
+import datetime
+import pytz
 
 from webob.response import Response
 
 from xblock.core import XBlock
-from xblock.fields import Scope, Integer, String, Float, Boolean
+from xblock.fields import Scope, Integer, String, Float, Boolean, DateTime
 from xblock.fragment import Fragment
 from django.template import  Context, Template
 from courseware.models import StudentModule
@@ -106,6 +108,20 @@ class webCreatorXBlock(XBlock):
         default='',
         scope=Scope.user_state,
         help="Feedback given to student by instructor."
+    )
+
+    evaluation_timestamp = DateTime(
+        display_name="Timestamp",
+        scope=Scope.user_state,
+        default=None,
+        help="When the user wants to be evaluated"
+    )
+
+    correction_timestamp = DateTime(
+        display_name="Timestamp",
+        scope=Scope.user_state,
+        default=None,
+        help="When the instructor corrects the exercise"
     )
 
     def max_score(self):
@@ -249,6 +265,7 @@ class webCreatorXBlock(XBlock):
             self.cssCode = data['cssCode']
             self.htmlCode = data['htmlCode']
             self.evaluated = 1
+            self.evaluation_timestamp = _now()
 
             return {
                 'result' : 'success',
@@ -302,6 +319,7 @@ class webCreatorXBlock(XBlock):
                 #'timestamp': state.get("uploaded_timestamp"),
                 #'published': state.get("score_published"),
                 'score': score,
+                'timestamp': state.get("evaluation_timestamp"),
                 #'approved': approved,
                 #'needs_approval': instructor and score is not None
                                   #and not approved,
@@ -317,7 +335,7 @@ class webCreatorXBlock(XBlock):
 
         return {
             'assignments': [get_student_data(module) for module in query],
-            #'max_score': self.max_score(),
+            'max_score': self.max_score(),
         }
 
     @XBlock.handler
@@ -428,6 +446,10 @@ class webCreatorXBlock(XBlock):
                 </vertical_demo>
              """),
         ]
+
+
+def _now():
+    return datetime.datetime.utcnow().replace(tzinfo=pytz.utc)
 
 def load_resource(resource_path):
     """
