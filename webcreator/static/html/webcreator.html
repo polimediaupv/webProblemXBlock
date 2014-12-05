@@ -11,16 +11,54 @@
       <a onclick="showStuff('jseditor',this);" class="tabheader" >Javascript</a>
   </div>
   <div class="tabcontents">
-      <div id="htmleditor" class="editor" value="{htmlCode}"></div>
-      <div id="csseditor" class="editor" value="{cssCode}"></div>
-      <div id="jseditor" class="editor" value="{jsCode}"></div>
+      <div id="htmleditor" class="editor" value="{{htmlCode}}"></div>
+      <div id="csseditor" class="editor" value="{{cssCode}}"></div>
+      <div id="jseditor" class="editor" value="{{jsCode}}"></div>
   </div>
   <div class="action">
         <input class="actions display" type="button" data-checking="Checking..." value="Visualizar">
         <input id="guardar" class="actions save" type="button" data-checking="Checking..." value="Guardar">
         <input id="resetear" class="actions reset" type="button" data-checking="Checking..." value="Reiniciar">
-        <input id="eval" class="actions eval" type="button" data-checking="Checking..." value="Evaluar">
-        <input id="unlock" class="actions unlock" type="button" data-checking="Checking..." value="Unlock">
-        <input id="valor" class="actions prueba" type="button" data-checking="Checking..." value="{evaluated}">
+        <input id="eval" class="actions eval" type="button" data-checking="Checking..." value="Guardar y Evaluar">
+        <!--<input id="unlock" class="actions unlock" type="button" data-checking="Checking..." value="Unlock">-->
+        <input id="valor" class="actions prueba" type="hidden" data-checking="Checking..." value="{{evaluated}}">
+
   </div>
+
+<!--  {{staff}}
+  {{instructor}}-->
+  {% if graded %}
+    <div><h2>Nota del ejercicio tras la corrección: {{graded.score}}</h2></div>
+    <div><h2>Comentarios del profesor: {{graded.comment}}</h2></div>
+  {% endif %}
+  {% if staff %}
+ <!--   <div class="action">
+        <input class="actions correction" type="button" data-checking="Checking..." value="Corregir">
+
+    </div> -->
+
+    <div aria-hidden="true" class="wrap-instructor-info">
+        <a class="instructor-info-action" id="grade-submissions-button" href="#tablon">Grade Submissions</a>
+
+
+    </div>
+
+  {% endif %}
+
+  <section aria-hidden="true" class="modal staff-modal" id="tablon" style="height: 75%">
+
+      <div class="inner-wrapper" style="color: black; overflow: auto;">
+          <header><h2>Lista de alumnos que han subido su ejercicio para evaluar:</h2></header>
+          <div id="notas" class="staff-modal">
+
+
+          </div>
+      </div>
+  </section>
+
+  <div id="grade-area">
+
+
+  </div>
+
 </div>

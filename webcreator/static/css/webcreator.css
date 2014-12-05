@@ -1,5 +1,13 @@
 /* CSS for webCreatorXBlock */
 
+.webcreator_block .staff-modal {
+    position: fixed;
+    z-index:100;
+    display: none;
+    width: 80%;
+    overflow:auto;
+}
+
 .webcreator_block .count {
     font-weight: bold;
 }
