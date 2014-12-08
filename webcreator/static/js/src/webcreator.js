@@ -56,7 +56,8 @@ function webCreatorXBlock(runtime, element) {
         //$("#unlock",element).attr('disabled', 'disabled');
     }
 
-    $(element).find('.actions.save').bind('click', function() {
+    $(element).find('.actions.save').bind('click', function(event) {
+       event.preventDefault();
        var editor = ace.edit($("#htmleditor",element)[0]);
        var htmlCode = btoa(editor.getSession().getValue());
        editor = ace.edit($("#jseditor",element)[0]);
@@ -69,6 +70,7 @@ function webCreatorXBlock(runtime, element) {
             'htmlCode': htmlCode,
             'cssCode': cssCode,
         };
+        $("#saving").show();
 
         $('.xblock-editor-error-message', element).html();
         $('.xblock-editor-error-message', element).css('display', 'none');
@@ -76,7 +78,10 @@ function webCreatorXBlock(runtime, element) {
         $.post(handlerUrl, JSON.stringify(data)).done(function(response) {
             if (response.result === 'success') {
 
-                window.location.reload(false);
+                /* window.location.reload(false);*/
+                $("#saving").hide();
+                showResult(element);
+
             } else {
                 $('.xblock-editor-error-message', element).html('Error: '+response.message);
                 $('.xblock-editor-error-message', element).css('display', 'block');
@@ -403,6 +408,7 @@ function webCreatorXBlock(runtime, element) {
     $(function ($) {
         /* Here's where you'd do things on page load. */
         console.log("coles");
+        $("#saving").hide();
 
 
     });
