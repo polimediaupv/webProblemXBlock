@@ -8,6 +8,45 @@
     overflow:auto;
 }
 
+.webcreator_block section.modal.staff-modal {
+    left:25%;
+    display: flex;
+}
+/*
+#alumnos tr th{
+    width: 200px;
+}
+
+#alumnos tr td {
+    width:200px;
+}
+*/
+
+.webcreator_block table.grid {
+    font-family: verdana,arial,sans-serif;
+    font-size:11px;
+    color:#333333;
+    border-width: 1px;
+    border-color: #666666;
+    border-collapse: collapse;
+}
+
+.webcreator_block table.grid th {
+    border-width: 1px;
+    padding: 8px;
+    border-style: solid;
+    border-color: #666666;
+    background-color: #dedede;
+}
+
+.webcreator_block table.grid td {
+    border-width: 1px;
+    padding: 8px;
+    border-style: solid;
+    border-color: #666666;
+    background-color: #ffffff;
+}
+
 .webcreator_block .count {
     font-weight: bold;
 }
@@ -19,6 +58,7 @@
 .visor>iframe{
     width: 600px;
     border: 1px;
+    border-style: solid;
 }
 
 .editor {

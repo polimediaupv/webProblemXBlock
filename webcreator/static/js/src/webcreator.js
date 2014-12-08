@@ -191,7 +191,7 @@ function webCreatorXBlock(runtime, element) {
             $("#notas").empty();
             //$("<h2>Lista de alumnos que hansubido su ejercicio para evaluar</h2>").appendTo($('#notas'));
 
-            $("<table id='alumnos'>").appendTo($('#notas'));
+            $("<table class='grid' id='alumnos'>").appendTo($('#notas'));
             var header = "<tr><th>Numero modulo</th><th>Nombre alumno</th><th>Subido</th><th>Nota</th></tr>";
             $(header).appendTo($('#alumnos'));
             var items = [];
@@ -203,8 +203,8 @@ function webCreatorXBlock(runtime, element) {
                     console.log("Nombre de usuario: " + this.username);
                     //$('#notas').html(element[index].fullname);
                     var score = this.score !=null ? this.score : "";
-                    items.push("<tr><td><a href='#' id='"+ this.module_id + "' >"  + this.module_id + "</a></td><td>" + this.fullname + "</td></tr>" +
-                        "<td>" + this.timestamp + "</td><td>" + score + "/" + max_score + "</td>");
+                    items.push("<tr><td><a href='#' id='"+ this.module_id + "' >"  + this.module_id + "</a></td><td>" + this.fullname + "</td>" +
+                        "<td>" + this.timestamp + "</td><td>" + score + "/" + max_score + "</td></tr>");
 
 
                 }
