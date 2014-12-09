@@ -56,8 +56,8 @@ function webCreatorXBlock(runtime, element) {
         //$("#unlock",element).attr('disabled', 'disabled');
     }
 
-    $(element).find('.actions.save').bind('click', function() {
-       //event.preventDefault();
+    $(element).find('.actions.save').bind('click', function(event) {
+       event.preventDefault();
        var editor = ace.edit($("#htmleditor",element)[0]);
        var htmlCode = btoa(editor.getSession().getValue());
        editor = ace.edit($("#jseditor",element)[0]);
@@ -70,7 +70,7 @@ function webCreatorXBlock(runtime, element) {
             'htmlCode': htmlCode,
             'cssCode': cssCode,
         };
-        //$("#saving").show();
+        $("#saving").show();
 
         $('.xblock-editor-error-message', element).html();
         $('.xblock-editor-error-message', element).css('display', 'none');
@@ -78,9 +78,12 @@ function webCreatorXBlock(runtime, element) {
         $.post(handlerUrl, JSON.stringify(data)).done(function(response) {
             if (response.result === 'success') {
 
-                 window.location.reload(false);
-                /*$("#saving").hide();
-                showResult(element);*/
+                 //window.location.reload(false);
+                setTimeout(function(){
+                   $("#saving").hide();
+                }, 1500);
+                //$("#saving").hide();
+                showResult(element);
 
             } else {
                 $('.xblock-editor-error-message', element).html('Error: '+response.message);
@@ -89,18 +92,86 @@ function webCreatorXBlock(runtime, element) {
         });
    });
 
-    $(element).find('.actions.reset').bind('click', function() {
+    $(element).find('.actions.reset').bind('click', function(event) {
 
+        event.preventDefault();
+        var msg = "Hola";
+        /*var info = {
+            'data_sent': msg,
+         };*/
 
-       var data = {
-        };
+        var data = {
+
+        }
+
+        $("#resetting").show();
 
         $('.xblock-editor-error-message', element).html();
         $('.xblock-editor-error-message', element).css('display', 'none');
-        var handlerUrl = runtime.handlerUrl(element, 'reset_answer');
+        var handlerUrl = runtime.handlerUrl(element, 'reset_answer_async');
+
+
         $.post(handlerUrl, JSON.stringify(data)).done(function(response) {
             if (response.result === 'success') {
-                window.location.reload(false);
+
+                console.log("Hola");
+                handlerUrl = runtime.handlerUrl(element, 'get_teacher_code');
+
+                $.post(handlerUrl, JSON.stringify(data)).done(function(data2, response){
+                    console.log(data2.cssCode);
+
+                    if (!$("#htmleditor",element).hasClass("oculta")){
+                        $("#htmleditor",element).addClass("oculta");
+                    }
+                    if (!$("#csseditor",element).hasClass("oculta")){
+                        $("#csseditor",element).addClass("oculta");
+                    }
+                    if (!$("#jseditor",element).hasClass("oculta")){
+                        $("#jseditor",element).addClass("oculta");
+                    }
+
+                    //$("#htmleditor",element).addClass("oculta");
+                    $("#jseditor",element).removeClass("oculta");
+
+                    var editor = ace.edit($("#jseditor", element)[0]);
+                    editor.setTheme("ace/theme/textmate");
+                    editor.getSession().setMode("ace/mode/javascript");
+                    editor.getSession().setValue(atob(data2.jsCode));
+                    editor.resize();
+                    $("#jseditor",element).addClass("oculta");
+
+                    $("#csseditor",element).removeClass("oculta");
+                    var cssContent= data2.cssCode;
+                    console.log(cssContent);
+                    editor = ace.edit($("#csseditor",element)[0]);
+                    editor.setTheme("ace/theme/textmate");
+                    editor.getSession().setMode("ace/mode/css");
+                    editor.getSession().setValue(atob(data2.cssCode));
+                    editor.resize();
+                    $("#csseditor",element).addClass("oculta");
+
+
+                    $("#htmleditor",element).removeClass("oculta");
+                    var htmlContent= data2.htmlCode;
+                    console.log(atob(htmlContent));
+                    editor = ace.edit($("#htmleditor",element)[0]);
+                    editor.setTheme("ace/theme/textmate");
+                    editor.getSession().setMode("ace/mode/html");
+                    editor.getSession().setValue(atob(data2.htmlCode));
+                    editor.resize();
+
+                    setTimeout(function(){
+                        $("#resetting").hide();
+                    }, 1500);
+
+
+                    // Visualizamos el código del alumno
+
+                    showResult(element);
+
+                });
+
+
             } else {
                 $('.xblock-editor-error-message', element).html('Error: '+response.message);
                 $('.xblock-editor-error-message', element).css('display', 'block');
@@ -114,9 +185,8 @@ function webCreatorXBlock(runtime, element) {
 
     });
 
-    $(element).find('.actions.eval').bind('click', function () {
-
-
+    $(element).find('.actions.eval').bind('click', function (event) {
+        event.preventDefault();
 
         /*var evaluated = 1;
 
@@ -137,12 +207,30 @@ function webCreatorXBlock(runtime, element) {
             'cssCode': cssCode,
         };
 
+        $("#sending").show();
+
         $('.xblock-editor-error-message', element).html();
         $('.xblock-editor-error-message', element).css('display', 'none');
         var handlerUrl = runtime.handlerUrl(element, 'evaluate');
         $.post(handlerUrl, JSON.stringify(data)).done(function(response) {
             if (response.result === 'success') {
-                window.location.reload(false);
+                //window.location.reload(false);
+                setTimeout(function(){
+                   $("#sending").hide();
+                }, 1500);
+
+                editor = ace.edit($("#htmleditor",element)[0]);
+                editor.setReadOnly(true);
+                editor = ace.edit($("#csseditor",element)[0]);
+                editor.setReadOnly(true);
+                editor = ace.edit($("#jseditor",element)[0]);
+                editor.setReadOnly(true);
+                $("#guardar",element).attr('disabled', 'disabled');
+                $("#resetear",element).attr('disabled', 'disabled');
+                $("#eval",element).attr('disabled', 'disabled');
+
+                showResult(element);
+
             } else {
                 $('.xblock-editor-error-message', element).html('Error: '+response.message);
                 $('.xblock-editor-error-message', element).css('display', 'block');
@@ -409,6 +497,8 @@ function webCreatorXBlock(runtime, element) {
         /* Here's where you'd do things on page load. */
         console.log("coles");
         $("#saving").hide();
+        $("#resetting").hide();
+        $("#sending").hide();
 
 
     });

@@ -244,6 +244,7 @@ class webCreatorXBlock(XBlock):
             self.cssCode = ""
             self.htmlCode = ""
 
+
             return {
                 'result' : 'success',
             }
@@ -251,6 +252,49 @@ class webCreatorXBlock(XBlock):
             return {
                 'message': 'Error saving data.'
             }
+
+    @XBlock.json_handler
+    def reset_answer_async(self, data, suffix=''):
+        """
+        An example handler, which increments the data.
+        """
+
+
+        if not self.evaluated:
+
+            self.jsCode = ""
+            self.cssCode = ""
+            self.htmlCode = ""
+
+            return {
+               'result' : 'success',
+            }
+        else:
+            return {
+                'message': 'Error saving data.'
+            }
+
+
+    @XBlock.json_handler
+    def get_teacher_code(self, request, suffix='' ):
+
+        if not self.evaluated:
+
+            cssCode = self.cssCodeTeacher
+            jsCode = self.jsCodeTeacher
+            htmlCode = self.htmlCodeTeacher
+
+            answer = {
+            'cssCode' : cssCode,
+            'jsCode' : jsCode,
+            'htmlCode' : htmlCode,
+            }
+            return answer
+        else:
+            return {
+                'message' : 'Error saving data.'
+            }
+
 
 
 
@@ -419,6 +463,9 @@ class webCreatorXBlock(XBlock):
         #state['annotated_filename'] = None
         #state['annotated_mimetype'] = None
         #state['annotated_timestamp'] = None
+        state['cssCode'] =''
+        state['jsCode'] =''
+        state['htmlCode'] =''
         state['evaluated'] = 0
         module.state = json.dumps(state)
         module.save()
