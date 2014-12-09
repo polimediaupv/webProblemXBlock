@@ -11,6 +11,8 @@ function webCreatorXBlock(runtime, element) {
     $("#jseditor",element).addClass("oculta");
 
 
+
+
     editor = ace.edit($("#csseditor",element)[0]);
     editor.setTheme("ace/theme/textmate");
     editor.getSession().setMode("ace/mode/css");
