@@ -11,6 +11,10 @@
     display: none;
 }
 
+#notifications-area{
+   margin-top: 10px;
+}
+
 .list-input{
     list-style-type: none;
 }

@@ -220,6 +220,9 @@ function webCreatorXBlock(runtime, element) {
                 setTimeout(function(){
                    $("#sending").hide();
                 }, 1500);
+                setTimeout(function(){
+                    $("<h2>Tu ejercicio está pendiente de ser corregido</h2>").appendTo($("#pending"));
+                }, 2000);
 
                 editor = ace.edit($("#htmleditor",element)[0]);
                 editor.setReadOnly(true);

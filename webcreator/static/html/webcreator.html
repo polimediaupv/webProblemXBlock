@@ -27,24 +27,30 @@
             <input id="valor" class="actions prueba" type="hidden" data-checking="Checking..." value="{{evaluated}}">
 
       </div>
-     <div id="saving">
-         <p>Guardando...</p>
+     <div id="notifications-area">
+         <div id="saving">
+             <p>Guardando...</p>
+         </div>
+         <div id="resetting">
+             <p>Volviendo a códigos iniciales HTML, CSS y Javascript...</p>
+         </div>
+         <div id="sending">
+             <p>Guardando y enviando solución para ser evaluada por el profesor...</p>
+         </div>
+         <div id="pending">
+         {% if not graded and evaluated %}
+            <h2>Tu ejercicio está pendiente de ser corregido</h2>
+         {% endif %}
+         </div>
+        <!--  {{staff}}
+          {{instructor}}-->
+          {% if not staff %}
+          {% if graded %}
+            <div><h2>Nota del ejercicio tras la corrección: {{graded.score}}</h2></div>
+            <div><h2>Comentarios del profesor: {{graded.comment}}</h2></div>
+          {% endif %}
+          {% endif %}
      </div>
-     <div id="resetting">
-         <p>Volviendo a códigos iniciales HTML, CSS y Javascript...</p>
-     </div>
-     <div id="sending">
-         <p>Guardando y enviando solución para ser evaluada por el profesor...</p>
-     </div>
-
-    <!--  {{staff}}
-      {{instructor}}-->
-      {% if not staff %}
-      {% if graded %}
-        <div><h2>Nota del ejercicio tras la corrección: {{graded.score}}</h2></div>
-        <div><h2>Comentarios del profesor: {{graded.comment}}</h2></div>
-      {% endif %}
-      {% endif %}
       {% if staff %}
      <!--   <div class="action">
             <input class="actions correction" type="button" data-checking="Checking..." value="Corregir">
