@@ -387,12 +387,14 @@ function webCreatorXBlock(runtime, element) {
                     var items=[];
                     items.length=0;
 
-                    items.push("<form id='enter-grade-form'><input id='module_id-input' type='hidden' name='module_id'/>" +
-                        "<div><h2>Estás evaluando el código y viendo la zona de notas del estudiante:  <span id='student-name'/></h2></div><div>Grade: <input id='grade-input' name='grade'/>" +
-                        "<span class='error'></span></div>" +
-                        "<div>Comment: <textarea id='comment-input' name='comment' rows='4'></textarea></div>" +
-                        "<div><button type='submit'>Guardar datos alumno</button><button type='button' id='enter-grade-cancel'>Cancelar evaluación</button>" +
-                        "<button type='button' id='remove-grade'>Borrar notas y desbloquear edición Alumno</button></div></form>");
+                    items.push("" + "<div><h1>Estás evaluando el código del alumno:  <span id='student-name'/></h1></div>" +
+                        "<form id='enter-grade-form'><fieldset><legend>Zona de evaluación</legend>" +
+                        "<div class='group group-form'><ol class='list-input'><input id='module_id-input' type='hidden' name='module_id'/>" +
+                        "<li id='field-name' class='field optional asic-field'><label class='inline'>Nombre alumno: </label><span class='negrita' id='name'></span></li>" +
+                        "<li id='field-grade' class='field text'><label for='grade-input'>Nota:</label><input id='grade-input' class='' name='grade'><span class='error'></span></li>" +
+                        "<li id='field-comments' class='field text'><label for='comment-input'>Comentarios:</label><textarea id='comment-input' class='' type='email' name='comment' rows='4'></textarea></li></ol>" +
+                        "<div class='action'><button type='submit' class='actions'>Guardar</button><button type='button' id='enter-grade-cancel' class='actions'>Cancelar</button>" +
+                        "<button type='button' id='remove-grade' class='actions'>Borrar</button></div></div></fieldset></form>");
 
                     var lineas_form = items.join("");
                     $(lineas_form).appendTo($('#grade-area'));
@@ -411,7 +413,7 @@ function webCreatorXBlock(runtime, element) {
                         }
                         else if (score < 0) {
                             form.find(".error").html("<br/>Grade must be positive.");
-                        } else if (score=""){
+                        } else if (score==""){
                             form.find(".error").html("<br/>Grade cannot be empty");
                         }
                         //else if (score > max_score) {
@@ -430,7 +432,7 @@ function webCreatorXBlock(runtime, element) {
                                 }).error(function(){
                                     console.log("Error en la entrega de datos");
                                     //$("#grade-area").empty();
-                                    alert("El valor de la no puede estar vacío");
+                                    alert("El valor de la nota no puede estar vacío");
                                     //$("#grade-submissions-button").trigger("click");
 
                                 });
@@ -470,6 +472,7 @@ function webCreatorXBlock(runtime, element) {
                     form.find("#grade-input").val("");
                     form.find("#comment-input").text("");*/
                     $(element).find("#student-name").text(data.username);
+                    form.find("#name").text(data.username);
                     form.find("#module_id-input").val(moduleId);
                     form.find("#grade-input").val(data.score);
                     form.find("#comment-input").text(data.comments);

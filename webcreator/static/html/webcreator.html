@@ -39,9 +39,11 @@
 
     <!--  {{staff}}
       {{instructor}}-->
+      {% if not staff %}
       {% if graded %}
         <div><h2>Nota del ejercicio tras la corrección: {{graded.score}}</h2></div>
         <div><h2>Comentarios del profesor: {{graded.comment}}</h2></div>
+      {% endif %}
       {% endif %}
       {% if staff %}
      <!--   <div class="action">
@@ -57,7 +59,7 @@
 
 
 
-      <section aria-hidden="true" class="modal staff-modal" id="tablon" style="height: 75%">
+      <section aria-hidden="true" class="modal staff-modal" id="tablon" style="height: 75%; margin-left: -675px;">
 
           <div class="inner-wrapper" style="color: black; overflow: auto;">
               <header><h2>Lista de alumnos que han subido su ejercicio para evaluar:</h2></header>
