@@ -38,6 +38,7 @@ class webCreatorXBlock(XBlock):
               "If the value is not set, the problem is worth the sum of the "
               "option point values."),
         values={"min": 0, "step": .1},
+        default=1,
         scope=Scope.settings
     )
 
@@ -211,6 +212,8 @@ class webCreatorXBlock(XBlock):
         An example handler, which increments the data.
         """
         self.display_name = data['display_name']
+        self.weight = data['weight']
+        self.points = data['points']
         self.jsCodeTeacher = data['jsCode']
         self.cssCodeTeacher = data['cssCode']
         self.htmlCodeTeacher = data['htmlCode']

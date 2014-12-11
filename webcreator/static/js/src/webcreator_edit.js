@@ -41,6 +41,8 @@ function webCreatorXBlock(runtime, element) {
 
        var data = {
             'display_name': $(edit_display_name).context.value,
+            'weight': $(edit_weight).context.value,
+            'points': $(edit_points).context.value,
             'jsCode': jsCode,
             'htmlCode': htmlCode,
             'cssCode': cssCode,
