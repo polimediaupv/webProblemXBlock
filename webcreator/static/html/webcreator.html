@@ -27,6 +27,7 @@
             <input id="valor" class="actions prueba" type="hidden" data-checking="Checking..." value="{{evaluated}}">
 
       </div>
+     {% if staff %}
      <div id="notifications-area">
          <div id="saving">
              <p>Guardando...</p>
@@ -51,7 +52,7 @@
           {% endif %}
           {% endif %}
      </div>
-      {% if staff %}
+
      <!--   <div class="action">
             <input class="actions correction" type="button" data-checking="Checking..." value="Corregir">
 

@@ -138,6 +138,10 @@ class webCreatorXBlock(XBlock):
     def is_instructor(self):
         return self.xmodule_runtime.get_user_role() == 'instructor'
 
+    def show_staff_grading_interface(self):
+        in_studio_preview = self.scope_ids.user_id is None
+        return self.is_course_staff() and not in_studio_preview
+
     # TO-DO: change this view to display your data your own way.
     def student_view(self, context=None):
         """
@@ -156,12 +160,15 @@ class webCreatorXBlock(XBlock):
         htmlCode = self.htmlCode if self.htmlCode !="" else self.htmlCodeTeacher
         jsCode = self.jsCode if self.jsCode !="" else self.jsCodeTeacher
         evaluated = self.evaluated
-        staff = self.is_course_staff()
+        staff = self.show_staff_grading_interface()
+        #staff = self.is_course_staff()
         instructor = self.is_instructor()
         if self.score is not None and self.score_approved:
             graded = {'score': self.score, 'comment': self.comment}
         else:
             graded = None
+
+
 
         context = {
             "cssCode" : cssCode,
@@ -170,7 +177,8 @@ class webCreatorXBlock(XBlock):
             "evaluated" : evaluated,
             "staff" : staff,
             "instructor": instructor,
-            "graded" : graded
+            "graded" : graded,
+
         }
 
         #html = self.resource_string("static/html/webcreator.html")
