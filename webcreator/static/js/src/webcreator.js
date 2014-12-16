@@ -92,6 +92,7 @@ function webCreatorXBlock(runtime, element) {
                 $('.xblock-editor-error-message', element).css('display', 'block');
             }
         });
+        this.blur();
    });
 
     $(element).find('.actions.reset').bind('click', function(event) {
@@ -179,11 +180,15 @@ function webCreatorXBlock(runtime, element) {
                 $('.xblock-editor-error-message', element).css('display', 'block');
             }
         });
+        this.blur();
    });
 
     $(element).find('.actions.display').bind('click', function () {
-
+        event.preventDefault();
         showResult(element);
+        //$(".visor").focus();
+        this.blur();
+        window.focus();
 
     });
 
@@ -241,6 +246,7 @@ function webCreatorXBlock(runtime, element) {
                 $('.xblock-editor-error-message', element).css('display', 'block');
             }
         });
+        this.blur();
 
 
     });
@@ -290,7 +296,7 @@ function webCreatorXBlock(runtime, element) {
             //$("<h2>Lista de alumnos que hansubido su ejercicio para evaluar</h2>").appendTo($('#notas'));
 
             $("<table class='grid' id='alumnos'>").appendTo($('#notas'));
-            var header = "<tr><th>Numero modulo</th><th>Nombre alumno</th><th>Subido</th><th>Nota</th></tr>";
+            var header = "<tr><th>Nombre alumno</th><th>Subido</th><th>Nota</th></tr>";
             $(header).appendTo($('#alumnos'));
             var items = [];
             $.each($(assignments), function(index, element){
@@ -301,13 +307,15 @@ function webCreatorXBlock(runtime, element) {
                     console.log("Nombre de usuario: " + this.username);
                     //$('#notas').html(element[index].fullname);
                     var score = this.score !=null ? this.score : "";
-                    items.push("<tr><td><a href='#' id='"+ this.module_id + "' >"  + this.module_id + "</a></td><td>" + this.fullname + "</td>" +
+                    items.push("<tr><td><a href='#' id='"+ this.module_id + "' >"  + this.fullname + "</a></td>" +
                         "<td>" + this.timestamp + "</td><td>" + score + "/" + max_score + "</td></tr>");
 
 
                 }
 
             });
+
+
 
 
             console.log(items.join(""));
@@ -317,6 +325,14 @@ function webCreatorXBlock(runtime, element) {
 
 
             console.log("asigna al div");
+
+
+            $("#close-modal-window").on('click', function(event){
+                event.preventDefault();
+                $("#lean_overlay").trigger("click");
+                window.location.href='#';
+
+            });
 
 
 
@@ -546,6 +562,7 @@ function showResult(element) {
         doc.open();
         doc.writeln(text);
         doc.close();
+
 }
 
 function showStuff(id,element) {

@@ -1,14 +1,13 @@
 /* CSS for webCreatorXBlock */
 
-#lean_overlay {
-    position: fixed;
-    z-index:100;
-    top: 0px;
-    left: 0px;
-    height:100%;
-    width:100%;
-    background: #000;
-    display: none;
+/*button:focus {outline:0; !important}*/
+
+.actions:focus {
+    outline: none;
+}
+
+#tablon header{
+    margin-bottom: 0px;
 }
 
 #notifications-area{

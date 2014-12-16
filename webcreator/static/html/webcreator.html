@@ -18,6 +18,7 @@
           <div id="csseditor" class="editor" value="{{cssCode}}"></div>
           <div id="jseditor" class="editor" value="{{jsCode}}"></div>
       </div>
+
       <div class="action">
             <input class="actions display" type="button" data-checking="Checking..." value="Visualizar">
             <input id="guardar" class="actions save" type="button" data-checking="Checking..." value="Guardar">
@@ -25,9 +26,9 @@
             <input id="eval" class="actions eval" type="button" data-checking="Checking..." value="Guardar y Evaluar">
             <!--<input id="unlock" class="actions unlock" type="button" data-checking="Checking..." value="Unlock">-->
             <input id="valor" class="actions prueba" type="hidden" data-checking="Checking..." value="{{evaluated}}">
-
       </div>
-     {% if staff %}
+
+     {% if noPreview or not staff %}
      <div id="notifications-area">
          <div id="saving">
              <p>Guardando...</p>
@@ -52,13 +53,16 @@
           {% endif %}
           {% endif %}
      </div>
+     {% endif %}
 
      <!--   <div class="action">
+
             <input class="actions correction" type="button" data-checking="Checking..." value="Corregir">
 
         </div> -->
 
-        <div aria-hidden="true" class="wrap-instructor-info">
+     {% if noPreview %}
+        <div class="wrap-instructor-info">
             <a class="instructor-info-action" id="grade-submissions-button" href="#tablon">Grade Submissions</a>
 
 
@@ -66,9 +70,10 @@
 
 
 
-      <section aria-hidden="true" class="modal staff-modal" id="tablon" style="height: 75%; margin-left: -675px;">
-
+      <section class="modal" id="tablon" style="overflow: auto">
+       <!-- <section aria-hidden="true" class="modalDialog" id="tablon" style="height: 75%; margin-left: -675px;">-->
           <div class="inner-wrapper" style="color: black; overflow: auto;">
+              <button id="close-modal-window" class="close-modal"><i class="icon-remove"><span class="sr">Close</span></i></button>
               <header><h2>Lista de alumnos que han subido su ejercicio para evaluar:</h2></header>
               <div id="notas"> <!--class="staff-modal"-->
 

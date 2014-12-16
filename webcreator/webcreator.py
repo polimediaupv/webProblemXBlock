@@ -161,8 +161,8 @@ class webCreatorXBlock(XBlock):
         htmlCode = self.htmlCode if self.htmlCode !="" else self.htmlCodeTeacher
         jsCode = self.jsCode if self.jsCode !="" else self.jsCodeTeacher
         evaluated = self.evaluated
-        staff = self.show_staff_grading_interface()
-        #staff = self.is_course_staff()
+        noPreview= self.show_staff_grading_interface()
+        staff = self.is_course_staff()
         instructor = self.is_instructor()
         if self.score is not None and self.score_approved:
             graded = {'score': self.score, 'comment': self.comment}
@@ -176,6 +176,7 @@ class webCreatorXBlock(XBlock):
             "htmlCode" : htmlCode,
             "jsCode" : jsCode,
             "evaluated" : evaluated,
+            "noPreview" : noPreview,
             "staff" : staff,
             "instructor": instructor,
             "graded" : graded,
